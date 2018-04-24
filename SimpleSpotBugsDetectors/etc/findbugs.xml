@@ -1,0 +1,24 @@
+<FindbugsPlugin xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="findbugsplugin.xsd" pluginid="de.loskutov.fb.detectors"
+  version="1.0.0" provider="Andrey Loskutov" website="http://andrei.gmxhome.de">
+
+  <!-- Detectors -->
+
+  <Detector class="de.loskutov.fb.detectors.FindPrintlnDetector"
+    speed="fast" reports="PRINTLN" />
+
+  <Detector class="de.loskutov.fb.detectors.FindAssertDetector"
+    speed="fast" reports="ASSERT" />
+
+  <Detector class="de.loskutov.fb.detectors.FindRoundingDetector"
+    speed="fast" reports="ROUNDING" />
+
+  <!-- Bug patterns -->
+
+  <BugPattern type="PRINTLN" abbrev="PRT" category="CORRECTNESS" />
+
+  <BugPattern type="ASSERT" abbrev="ASR" category="CORRECTNESS" />
+
+  <BugPattern type="ROUNDING" abbrev="RND" category="EXPERIMENTAL" />
+
+</FindbugsPlugin>

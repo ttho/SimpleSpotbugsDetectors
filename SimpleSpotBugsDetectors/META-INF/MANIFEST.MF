@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: SimpleFindBugsDetectors
+Bundle-SymbolicName: de.loskutov.fb.detectors;singleton:=true
+Bundle-Version: 1.0.0
+Require-Bundle: spotbugs;resolution:=optional,
+ com.github.spotbugs.plugin.eclipse;bundle-version="3.1.2",
+ org.eclipse.core.runtime
+Bundle-Vendor: Andrey Loskutov
+Bundle-RequiredExecutionEnvironment: JavaSE-1.8
+Eclipse-RegisterBuddy: com.github.spotbugs.plugin.eclipse
+Bundle-ClassPath: .
+Export-Package: de.loskutov.fb.detectors,
+ de.loskutov.fb.matcher
+Bundle-ActivationPolicy: lazy

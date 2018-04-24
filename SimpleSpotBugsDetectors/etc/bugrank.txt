@@ -1,0 +1,2 @@
+-5 BugPattern ASSERT
+-5 BugPattern PRINTLN

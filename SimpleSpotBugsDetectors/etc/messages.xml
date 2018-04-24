@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<MessageCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="messagecollection.xsd">
+  <Plugin>
+    <ShortDescription>Simple SpotBugs detectors plugin</ShortDescription>
+    <Details>
+<![CDATA[
+<p>This plugin contains additional SpotBugs detectors.</p>
+]]>
+    </Details>
+  </Plugin>
+
+  <PluginComponent id="de.loskutov.fb.detectors">
+    <Description>
+    </Description>
+    <Details>
+    </Details>
+  </PluginComponent>
+
+    <!-- Detectors -->
+
+    <Detector class="de.loskutov.fb.detectors.FindPrintlnDetector">
+        <Details>
+<![CDATA[
+<p> Finds calls to "System.out.println()", "System.err.println()" and
+"Throwable.printStackTrace()" without checking for debug context like "if(DEBUG)".</p>
+]]>
+        </Details>
+    </Detector>
+
+    <Detector class="de.loskutov.fb.detectors.FindAssertDetector">
+        <Details>
+<![CDATA[
+<p> The detector finds all places where "assert" keyword is used.</p>
+]]>
+        </Details>
+    </Detector>
+
+    <Detector class="de.loskutov.fb.detectors.FindRoundingDetector">
+        <Details>
+<![CDATA[
+<p> The detector finds all places where floating point values are stored to the interger variables
+(and possibly rounding errors are introduced).</p>
+]]>
+        </Details>
+    </Detector>
+
+  <!-- Bug patterns -->
+
+    <BugPattern type="PRINTLN">
+        <ShortDescription>Debug output not in debug context</ShortDescription>
+        <LongDescription>Debug output not in debug context in {1.class.givenClass}.{1.name}()</LongDescription>
+        <Details>
+<![CDATA[
+  <p>It is not recommended to have "print/printf/println/printStackTrace" calls  in production code.
+      There are many reasons why this could be a problem. </p>
+    <ol>
+    <li> Users might not be able to see the output at all. </li>
+    <li> Printing to standard out (console) decreases performance. </li>
+    <li> Printing may cost extra memory. </li>
+    <li> In worst case application may hang because the "println" uses a
+      limited buffer that not flushed. </li>
+    </ol>
+
+    <p> A <b>much better</b> idea is to use appropriate logging framework instead.
+      You can also avoid reporting this issues:
+      <ul>
+      <li>enclose your "println" statement with an "if" - block. 'If' condition statement
+      must contain "debug" words like "debug, dump, trace, print".</li>
+      <li>change your method name to "debug" - like: dumpToConsole() or similar.</li>
+    </p>
+
+    <p> Example: </p>
+<pre>
+    // bad production code
+    for (String string : args) {
+      System.out.println(string);
+      doSomething(string);
+    }
+
+    // good production code
+    for (String string : args) {
+      if (DEBUG) {
+        System.out.println(string);
+      }
+      doSomething(string);
+    }
+
+    // good production code
+    for (String string : args) {
+      if (isPrintToConsole()) {
+        System.out.println(string);
+      }
+      doSomething(string);
+    }
+</pre>
+]]>
+        </Details>
+    </BugPattern>
+
+
+    <BugPattern type="ASSERT">
+        <ShortDescription>Using &quot;assert&quot; keyword</ShortDescription>
+        <LongDescription>Using &quot;assert&quot; keyword in {1.class.givenClass}.{1.name}()</LongDescription>
+        <Details>
+<![CDATA[
+  <p>
+  Statements with "assert" keyword are executed only if the JVM is started with a special "-ea" flag. Per
+  default, JVM ignores all statements using "assert" keyword and does not evaluate them at all.
+  It is hard to make sure that debugging, testing and production is done with same JVM settings.
+  If the settings in production differs from those in test, one might need to double test coverage
+  to cover behavior of "assert" statements in both modes.
+  </p>
+  <p>To avoid unintended and unexpected system behavior it is discouraged to use "assert" keyword.</p>
+]]>
+    </Details>
+    </BugPattern>
+
+    <BugPattern type="ROUNDING">
+        <ShortDescription>Converting floating numbers to integers</ShortDescription>
+        <LongDescription>Converting floating numbers to integers in {1.class.givenClass}.{1.name}()</LongDescription>
+        <Details>
+<![CDATA[
+  <p>TBD.</p>
+]]>
+    </Details>
+    </BugPattern>
+
+    <BugCode abbrev="PRT">Debug output not in debug context</BugCode>
+    <BugCode abbrev="ASR">Using &quot;assert&quot; keyword</BugCode>
+    <BugCode abbrev="RND">Converting floating numbers to integers</BugCode>
+
+</MessageCollection>
