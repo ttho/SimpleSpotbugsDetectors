@@ -12,12 +12,13 @@ package de.loskutov.fb.detectors;
 
 import de.loskutov.fb.annotations.DetectorUnderTest;
 import de.loskutov.fb.detectors.samples.FindPrntlnSamples;
+import de.loskutov.fb.detectors.samples.FindPrntlnSamplesDebugger;
 import de.loskutov.fb.detectors.samples.MainFindPrntlnSamples;
 import de.loskutov.fb.test.DetectorsTest;
 
-@DetectorUnderTest(value=FindPrintlnDetector.class, samples = { FindPrntlnSamples.class,
-    MainFindPrntlnSamples.class,
-    de.loskutov.fb.detectors.samples.main.FindPrntlnSamples.class })
+@DetectorUnderTest(value = FindPrintlnDetector.class, samples = { FindPrntlnSamples.class,
+        FindPrntlnSamplesDebugger.class, MainFindPrntlnSamples.class,
+        de.loskutov.fb.detectors.samples.main.FindPrntlnSamples.class })
 public class TestFindPrintln extends DetectorsTest {
     //
 }

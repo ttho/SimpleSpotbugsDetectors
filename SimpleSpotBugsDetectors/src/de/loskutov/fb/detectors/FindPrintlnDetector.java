@@ -54,7 +54,7 @@ public class FindPrintlnDetector extends AbstractPatternDetector {
             "(debug|dump|trace|log|report|warn|progress|assert|show|print|main).*");
 
     private static final Pattern DEBUG_CLASS_NAMES = compile(
-            ".*(Debug|Dump|Trace|Log|Report|Progress|Print).*");
+            ".*(Dump|Trace|Log|Print).*");
 
     public FindPrintlnDetector(BugReporter bugReporter) {
         super(bugReporter);
