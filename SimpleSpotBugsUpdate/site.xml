@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<site>
+   <feature url="features/de.loskutov.fb.detectors.feature_1.0.2.qualifier.jar" id="de.loskutov.fb.detectors.feature" version="1.0.2.qualifier">
+      <category name="SimpleSpotBugsDetectors"/>
+   </feature>
+   <category-def name="SimpleSpotBugsDetectors" label="SimpleSpotBugsDetectors"/>
+</site>
