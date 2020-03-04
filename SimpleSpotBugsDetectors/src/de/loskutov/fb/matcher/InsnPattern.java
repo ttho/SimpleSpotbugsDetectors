@@ -54,8 +54,10 @@ public class InsnPattern {
     public class InsnMatcher {
         private int current;
         private LineNumberNode currentLine;
+        private AbstractInsnNode lastNode;
 
         public int matches(AbstractInsnNode insnNode){
+            this.lastNode = insnNode;
             if(current >= pattern.size()){
                 return TERMINATE;
             }
@@ -145,11 +147,16 @@ public class InsnPattern {
 
         public void reset() {
             current = 0;
+            lastNode = null;
         }
 
         @CheckForNull
         public LineNumberNode getLastLine() {
             return currentLine;
+        }
+
+        public AbstractInsnNode getLastNode() {
+            return lastNode;
         }
     }
 

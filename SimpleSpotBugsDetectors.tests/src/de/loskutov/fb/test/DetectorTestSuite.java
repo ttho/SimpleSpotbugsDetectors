@@ -13,6 +13,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 import de.loskutov.fb.detectors.TestFindAssert;
+import de.loskutov.fb.detectors.TestFindInt2Float;
 import de.loskutov.fb.detectors.TestFindPrintln;
 import de.loskutov.fb.detectors.TestFindPrintlnInner;
 import de.loskutov.fb.detectors.TestFindPrintlnNoWarnings;
@@ -27,6 +28,7 @@ import de.loskutov.fb.detectors.TestFindPrintlnTricky;
     TestFindPrintlnTricky.class,
     TestFindPrintlnInner.class,
     TestFindPrintlnPrinter.class,
+    TestFindInt2Float.class,
 })
 
 public class DetectorTestSuite {

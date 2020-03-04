@@ -11,7 +11,10 @@
     speed="fast" reports="ASSERT" />
 
   <Detector class="de.loskutov.fb.detectors.FindRoundingDetector"
-    speed="fast" reports="ROUNDING" />
+    speed="fast" disabled="true" reports="ROUNDING" />
+
+  <Detector class="de.loskutov.fb.detectors.FindIntegerToFloatConversionDetector"
+    speed="fast" disabled="true" reports="INT2FLOAT,LONG2DOUBLE,LONG2FLOAT" />
 
   <!-- Bug patterns -->
 
@@ -19,6 +22,12 @@
 
   <BugPattern type="ASSERT" abbrev="ASR" category="CORRECTNESS" />
 
-  <BugPattern type="ROUNDING" abbrev="RND" category="EXPERIMENTAL" />
+  <BugPattern type="ROUNDING" abbrev="RND" category="CORRECTNESS" />
+
+  <BugPattern type="INT2FLOAT" abbrev="I2F" category="CORRECTNESS" />
+
+  <BugPattern type="LONG2DOUBLE" abbrev="L2D" category="CORRECTNESS" />
+
+  <BugPattern type="LONG2FLOAT" abbrev="L2F" category="CORRECTNESS" />
 
 </FindbugsPlugin>

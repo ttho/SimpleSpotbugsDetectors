@@ -36,13 +36,13 @@ public class JumpInstructionsIterator {
     private void init(){
         LabelNode prevLabel = null;
         CodeBlock curBlock = null;
-        int prevIdx = 0;
+//        int prevIdx = 0;
         Map<LabelNode, Integer> indices = new HashMap<>();
         for (int i = 0; i < insList.size(); i++) {
             AbstractInsnNode node = insList.get(i);
             if (node.getType() == LABEL) {
                 prevLabel = (LabelNode) node;
-                prevIdx = i;
+//                prevIdx = i;
                 indices.put(prevLabel, Integer.valueOf(i));
                 if(curBlock != null) {
                     if (curBlock.targetLabel == node) {

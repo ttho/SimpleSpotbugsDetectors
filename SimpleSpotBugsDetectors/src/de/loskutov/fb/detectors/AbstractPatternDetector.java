@@ -29,7 +29,7 @@ public abstract class AbstractPatternDetector extends ClassNodeDetector {
         super(bugReporter);
     }
 
-    abstract protected BugInstance createBug(String methodName, String methodSign, int line, boolean isStatic);
+    abstract protected BugInstance createBug(String methodName, String methodSign, DefaultInstructionsIterator iterator, boolean isStatic);
 
     @Nonnull
     abstract protected InsnPattern getPattern();
@@ -54,7 +54,7 @@ public abstract class AbstractPatternDetector extends ClassNodeDetector {
             DefaultInstructionsIterator it = new DefaultInstructionsIterator(getPattern(), instructions);
             for(int insNmbr = it.next(0); insNmbr != -1; insNmbr = it.next(insNmbr)){
                 if(it.hasMatch()) {
-                    BugInstance bug = createBug(name, desc, it.getLastLine(), isStatic());
+                    BugInstance bug = createBug(name, desc, it, isStatic());
                     bugReporter.reportBug(bug);
                 }
             }

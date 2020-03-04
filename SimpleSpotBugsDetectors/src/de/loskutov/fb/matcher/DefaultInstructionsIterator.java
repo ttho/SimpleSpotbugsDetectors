@@ -68,6 +68,10 @@ public class DefaultInstructionsIterator {
         return lvn.line;
     }
 
+    public InsnMatcher getMatcher() {
+        return matcher;
+    }
+
     public boolean hasMatch(){
         return getLastLine() != -1;
     }

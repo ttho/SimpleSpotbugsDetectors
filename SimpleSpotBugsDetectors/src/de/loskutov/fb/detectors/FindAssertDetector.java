@@ -14,6 +14,7 @@ import javax.annotation.Nonnull;
 
 import org.objectweb.asm.Opcodes;
 
+import de.loskutov.fb.matcher.DefaultInstructionsIterator;
 import de.loskutov.fb.matcher.InsnPattern;
 import de.loskutov.fb.matcher.NamedNode;
 import edu.umd.cs.findbugs.BugInstance;
@@ -45,7 +46,8 @@ public class FindAssertDetector extends AbstractPatternDetector {
     }
 
     @Override
-    protected BugInstance createBug(String methodName, String methodSign, int line, boolean isStatic) {
+    protected BugInstance createBug(String methodName, String methodSign, DefaultInstructionsIterator iterator, boolean isStatic) {
+        int line = iterator.getLastLine();
         BugInstance bug = new BugInstance(this, "ASSERT", NORMAL_PRIORITY);
         MethodAnnotation methodAnnotaion = MethodAnnotation.fromForeignMethod(
                 name, methodName, methodSign, isStatic);

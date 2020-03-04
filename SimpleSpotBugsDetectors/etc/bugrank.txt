@@ -1,2 +1,6 @@
 -5 BugPattern ASSERT
 -5 BugPattern PRINTLN
+-5 BugPattern ROUNDING
+-5 BugPattern INT2FLOAT
+-5 BugPattern LONG2DOUBLE
+-5 BugPattern LONG2FLOAT

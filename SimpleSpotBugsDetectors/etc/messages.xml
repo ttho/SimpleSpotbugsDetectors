@@ -45,6 +45,16 @@
         </Details>
     </Detector>
 
+    <Detector class="de.loskutov.fb.detectors.FindIntegerToFloatConversionDetector">
+        <Details>
+<![CDATA[
+<p> The detector finds all places where integer values stored to floating point variables
+(and possibly do not fit to the target because the integer part of the value is
+higher as the significand of the floating value).</p>
+]]>
+        </Details>
+    </Detector>
+
   <!-- Bug patterns -->
 
     <BugPattern type="PRINTLN">
@@ -126,8 +136,65 @@
     </Details>
     </BugPattern>
 
+    <BugPattern type="INT2FLOAT">
+        <ShortDescription>Converting integer to float</ShortDescription>
+        <LongDescription>Converting integer number to float in {1.class.givenClass}.{1.name}()</LongDescription>
+        <Details>
+<![CDATA[
+  <p>A big integer value could not fit to the significand part of the float value.</p>
+  <pre><code>
+        int int1 = Integer.MAX_VALUE - 1;
+        int int2 = Integer.MAX_VALUE - 2;
+        float float1 = int1; // implicit conversion to float value
+        float float2 = int2; // implicit conversion to float value
+        System.out.println(float1 == float2); // true
+        System.out.println((int)float1 == int1); // false
+  </code></pre>
+]]>
+    </Details>
+    </BugPattern>
+
+    <BugPattern type="LONG2DOUBLE">
+        <ShortDescription>Converting long number to double</ShortDescription>
+        <LongDescription>Converting long number to double in {1.class.givenClass}.{1.name}()</LongDescription>
+        <Details>
+<![CDATA[
+  <p>A big long value could not fit to the significand part of the double value.</p>
+  <pre><code>
+        long long1 = Long.MAX_VALUE - 1;
+        long long2 = Long.MAX_VALUE - 2;
+        double double1 = long1; // implicit conversion to double value
+        double double2 = long2; // implicit conversion to double value
+        System.out.println(double1 == double2); // true
+        System.out.println((long)double1 == long1); // false
+  </code></pre>
+]]>
+    </Details>
+    </BugPattern>
+
+    <BugPattern type="LONG2FLOAT">
+        <ShortDescription>Converting long number to float</ShortDescription>
+        <LongDescription>Converting long numbers to float in {1.class.givenClass}.{1.name}()</LongDescription>
+        <Details>
+<![CDATA[
+  <p>A big long value could not fit to the significand part of the float value.</p>
+  <pre><code>
+        long long1 = Long.MAX_VALUE - 1;
+        long long2 = Long.MAX_VALUE - 2;
+        float float1 = long1; // implicit conversion to float value
+        float float2 = long2; // implicit conversion to float value
+        System.out.println(float1 == float2); // true
+        System.out.println((long)float1 == long1); // false
+  </code></pre>
+]]>
+    </Details>
+    </BugPattern>
+
     <BugCode abbrev="PRT">Debug output not in debug context</BugCode>
     <BugCode abbrev="ASR">Using &quot;assert&quot; keyword</BugCode>
     <BugCode abbrev="RND">Converting floating numbers to integers</BugCode>
+    <BugCode abbrev="I2F">Converting integer number to float</BugCode>
+    <BugCode abbrev="L2D">Converting long number to double</BugCode>
+    <BugCode abbrev="L2F">Converting long number to float</BugCode>
 
 </MessageCollection>

@@ -9,10 +9,13 @@
  *******************************************************************************/
 
 package de.loskutov.fb.detectors;
-import static de.loskutov.fb.matcher.InsnPattern.*;
-import static org.objectweb.asm.Opcodes.*;
+
+import static de.loskutov.fb.matcher.InsnPattern.or;
 
 import javax.annotation.Nonnull;
+
+import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.tree.AbstractInsnNode;
 
 import de.loskutov.fb.matcher.DefaultInstructionsIterator;
 import de.loskutov.fb.matcher.InsnNode;
@@ -23,38 +26,41 @@ import edu.umd.cs.findbugs.BugReporter;
 import edu.umd.cs.findbugs.MethodAnnotation;
 import edu.umd.cs.findbugs.SourceLineAnnotation;
 
-public class FindRoundingDetector extends AbstractPatternDetector {
+public class FindIntegerToFloatConversionDetector extends AbstractPatternDetector {
 
+    private final InsnPattern l2dPattern;
 
-    private final InsnPattern patternPrint;
+    // L2D or I2F detection
+    InstructionMatcher longToDouble = or(new InsnNode(Opcodes.L2D), new InsnNode(Opcodes.I2F), new InsnNode(Opcodes.L2F));
 
-
-    public FindRoundingDetector(BugReporter bugReporter) {
+    public FindIntegerToFloatConversionDetector(BugReporter bugReporter) {
         super(bugReporter);
-        patternPrint = new InsnPattern();
-//        patternPrint.add(sequence (new InsnNode(D2I), new InsnNode(ISTORE)));
-        InstructionMatcher float2int = or(new InsnNode(D2I), new InsnNode(F2I));
-        InstructionMatcher float2long = or(new InsnNode(D2L), new InsnNode(F2L));
-        InstructionMatcher storeInt = or(new InsnNode(ISTORE), new InsnNode(PUTFIELD), new InsnNode(PUTSTATIC));
-        InstructionMatcher storeLong = or(new InsnNode(LSTORE), new InsnNode(PUTFIELD), new InsnNode(PUTSTATIC));
-        InstructionMatcher int2small = or (new InsnNode(I2S), new InsnNode(I2B));
-        patternPrint.add(
-                or(
-                        and(float2int, storeInt),
-                        and(float2int, int2small, storeInt),
-                        and(float2long, storeLong)
-        ));
+        l2dPattern = new InsnPattern();
+        l2dPattern.add(longToDouble);
     }
 
     @Override
-    public boolean checkClass() {
-        return true;
+    @Nonnull
+    protected InsnPattern getPattern() {
+        return l2dPattern;
     }
 
     @Override
     protected BugInstance createBug(String methodName, String methodSign,  DefaultInstructionsIterator iterator, boolean isStatic) {
         int line = iterator.getLastLine();
-        BugInstance bug = new BugInstance(this, "ROUNDING", LOW_PRIORITY);
+        AbstractInsnNode node = iterator.getMatcher().getLastNode();
+        String type = "INT2FLOAT";
+        if(node != null) {
+            int opcode = node.getOpcode();
+            if (opcode == Opcodes.L2D) {
+                type = "LONG2DOUBLE";
+            } else
+            if (opcode == Opcodes.L2F) {
+                type = "LONG2FLOAT";
+            }
+        }
+
+        BugInstance bug = new BugInstance(this, type, NORMAL_PRIORITY);
         MethodAnnotation methodAnnotaion = MethodAnnotation.fromForeignMethod(
                 name, methodName, methodSign, isStatic);
         bug.addClass(this).addMethod(methodAnnotaion);
@@ -65,11 +71,4 @@ public class FindRoundingDetector extends AbstractPatternDetector {
         bug.addSourceLine(sourceLine);
         return bug;
     }
-
-    @Override
-    @Nonnull
-    protected InsnPattern getPattern() {
-        return patternPrint;
-    }
-
 }

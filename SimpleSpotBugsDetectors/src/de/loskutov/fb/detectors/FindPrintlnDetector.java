@@ -19,6 +19,7 @@ import javax.annotation.Nonnull;
 
 import org.objectweb.asm.MethodVisitor;
 
+import de.loskutov.fb.matcher.DefaultInstructionsIterator;
 import de.loskutov.fb.matcher.IfTrue;
 import de.loskutov.fb.matcher.InsnPattern;
 import de.loskutov.fb.matcher.NamedNode;
@@ -86,7 +87,8 @@ public class FindPrintlnDetector extends AbstractPatternDetector {
     }
 
     @Override
-    protected BugInstance createBug(String methodName, String methodSign, int line, boolean isStatic) {
+    protected BugInstance createBug(String methodName, String methodSign,  DefaultInstructionsIterator iterator, boolean isStatic) {
+        int line = iterator.getLastLine();
         BugInstance bug = new BugInstance(this, "PRINTLN", NORMAL_PRIORITY);
         MethodAnnotation methodAnnotaion = MethodAnnotation.fromForeignMethod(
                 name, methodName, methodSign, isStatic);
