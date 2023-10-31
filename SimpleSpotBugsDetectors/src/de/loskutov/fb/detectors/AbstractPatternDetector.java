@@ -10,6 +10,8 @@
 
 package de.loskutov.fb.detectors;
 
+import java.util.function.Consumer;
+
 import javax.annotation.Nonnull;
 
 import org.objectweb.asm.MethodVisitor;
@@ -34,6 +36,11 @@ public abstract class AbstractPatternDetector extends ClassNodeDetector {
     @Nonnull
     abstract protected InsnPattern getPattern();
 
+    @Nonnull
+    protected void checkAnnotations(MethodNode node, Consumer<BugInstance> reporter) {
+        // no op by default
+    }
+
     @Override
     public MethodVisitor visitMethod(final int access1, final String name1,
             final String desc, final String signature1,
@@ -43,7 +50,7 @@ public abstract class AbstractPatternDetector extends ClassNodeDetector {
 
     private final class MyMethodNode extends MethodNode {
         public MyMethodNode(int access, String name, String desc, String signature, String[] exceptions) {
-            super(Opcodes.ASM5, access, name, desc, signature, exceptions);
+            super(Opcodes.ASM9, access, name, desc, signature, exceptions);
         }
 
         @Override
@@ -51,13 +58,19 @@ public abstract class AbstractPatternDetector extends ClassNodeDetector {
             if(!checkClass()){
                 return;
             }
-            DefaultInstructionsIterator it = new DefaultInstructionsIterator(getPattern(), instructions);
-            for(int insNmbr = it.next(0); insNmbr != -1; insNmbr = it.next(insNmbr)){
-                if(it.hasMatch()) {
-                    BugInstance bug = createBug(name, desc, it, isStatic());
-                    bugReporter.reportBug(bug);
+            InsnPattern pattern = getPattern();
+            if (!pattern.isEmpty()) {
+                DefaultInstructionsIterator it = new DefaultInstructionsIterator(pattern, instructions);
+                for(int insNmbr = it.next(0); insNmbr != -1; insNmbr = it.next(insNmbr)){
+                    if(it.hasMatch()) {
+                        BugInstance bug = createBug(name, desc, it, isStatic());
+                        bugReporter.reportBug(bug);
+                    }
                 }
             }
+            checkAnnotations(this, bug -> {
+                bugReporter.reportBug(bug);
+            });
         }
 
         boolean isStatic(){

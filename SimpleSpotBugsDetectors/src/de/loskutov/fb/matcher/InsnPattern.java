@@ -34,12 +34,22 @@ public class InsnPattern {
     static final int MATCH = 1;
     static final int SKIP_TO_NEXT = 2;
 
-    private final List<InstructionMatcher> pattern;
+    public static final InsnPattern EMPTY_PATTERN = new InsnPattern() {
+        @Override
+        public InsnPattern add(InstructionMatcher node) {
+            throw new IllegalStateException();
+        }
+    };
 
+    private final List<InstructionMatcher> pattern;
 
     public InsnPattern() {
         super();
         pattern = new ArrayList<InstructionMatcher>();
+    }
+
+    public boolean isEmpty() {
+        return pattern.isEmpty();
     }
 
     public InsnPattern add(InstructionMatcher node){
@@ -54,6 +64,7 @@ public class InsnPattern {
     public class InsnMatcher {
         private int current;
         private LineNumberNode currentLine;
+        private LineNumberNode firstLine;
         private AbstractInsnNode lastNode;
 
         public int matches(AbstractInsnNode insnNode){
@@ -63,6 +74,9 @@ public class InsnPattern {
             }
             switch (insnNode.getType()) {
             case AbstractInsnNode.LINE:
+                if(firstLine == null) {
+                    firstLine = (LineNumberNode) insnNode;
+                }
                 currentLine = (LineNumberNode) insnNode;
                 return CONTINUE;
             case AbstractInsnNode.FRAME: //$FALL-THROUGH$
@@ -153,6 +167,11 @@ public class InsnPattern {
         @CheckForNull
         public LineNumberNode getLastLine() {
             return currentLine;
+        }
+
+        @CheckForNull
+        public LineNumberNode getFirstLine() {
+            return firstLine;
         }
 
         public AbstractInsnNode getLastNode() {

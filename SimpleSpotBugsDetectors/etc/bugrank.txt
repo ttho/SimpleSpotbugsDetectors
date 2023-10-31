@@ -4,3 +4,5 @@
 -5 BugPattern INT2FLOAT
 -5 BugPattern LONG2DOUBLE
 -5 BugPattern LONG2FLOAT
+-5 BugPattern JUNIT4TEST
+-5 BugPattern JUNIT5TEST

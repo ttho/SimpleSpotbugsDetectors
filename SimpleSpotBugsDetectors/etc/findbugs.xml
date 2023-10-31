@@ -10,6 +10,12 @@
   <Detector class="de.loskutov.fb.detectors.FindAssertDetector"
     speed="fast" reports="ASSERT" />
 
+  <Detector class="de.loskutov.fb.detectors.FindJunit5AnnotationDetector"
+    speed="fast" disabled="true" reports="JUNIT5TEST" />
+
+  <Detector class="de.loskutov.fb.detectors.FindJunit4AnnotationDetector"
+    speed="fast" disabled="true" reports="JUNIT4TEST" />
+
   <Detector class="de.loskutov.fb.detectors.FindRoundingDetector"
     speed="fast" disabled="true" reports="ROUNDING" />
 
@@ -21,6 +27,10 @@
   <BugPattern type="PRINTLN" abbrev="PRT" category="CORRECTNESS" />
 
   <BugPattern type="ASSERT" abbrev="ASR" category="CORRECTNESS" />
+
+  <BugPattern type="JUNIT5TEST" abbrev="JU5" category="CORRECTNESS" />
+
+  <BugPattern type="JUNIT4TEST" abbrev="JU4" category="CORRECTNESS" />
 
   <BugPattern type="ROUNDING" abbrev="RND" category="CORRECTNESS" />
 

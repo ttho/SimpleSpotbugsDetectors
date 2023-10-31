@@ -36,6 +36,22 @@
         </Details>
     </Detector>
 
+    <Detector class="de.loskutov.fb.detectors.FindJunit5AnnotationDetector">
+        <Details>
+<![CDATA[
+<p> The detector finds methods annotated with org.junit.jupiter.api.Test annotation (JUnit5).</p>
+]]>
+        </Details>
+    </Detector>
+
+    <Detector class="de.loskutov.fb.detectors.FindJunit4AnnotationDetector">
+        <Details>
+<![CDATA[
+<p> The detector finds methods annotated with org.junit.Test annotation (JUnit4).</p>
+]]>
+        </Details>
+    </Detector>
+
     <Detector class="de.loskutov.fb.detectors.FindRoundingDetector">
         <Details>
 <![CDATA[
@@ -126,6 +142,30 @@ higher as the significand of the floating value).</p>
     </Details>
     </BugPattern>
 
+    <BugPattern type="JUNIT5TEST">
+        <ShortDescription>Using JUnit5 Test annotation</ShortDescription>
+        <LongDescription>Using JUnit5 Test annotation in {1.class.givenClass}.{1.name}()</LongDescription>
+        <Details>
+<![CDATA[
+<p> Method is annotated with <b>org.junit.jupiter.api.Test</b> annotation (JUnit5).
+Because this warning is enabled for your project, you are supposed to use <b>different</b> "Test" annotation
+(either org.junit.Test from JUnit4 or custom one configured for your project).</p>
+]]>
+    </Details>
+    </BugPattern>
+
+    <BugPattern type="JUNIT4TEST">
+        <ShortDescription>Using JUnit4 Test annotation</ShortDescription>
+        <LongDescription>Using JUnit4 Test annotation in {1.class.givenClass}.{1.name}()</LongDescription>
+        <Details>
+<![CDATA[
+<p> Method is annotated with <b>org.junit.Test</b> annotation (JUnit4).
+Because this warning is enabled for your project, you are supposed to use <b>different</b> "Test" annotation
+(either org.junit.jupiter.api.Test from JUnit5 or custom one configured for your project).</p>
+]]>
+    </Details>
+    </BugPattern>
+
     <BugPattern type="ROUNDING">
         <ShortDescription>Converting floating numbers to integers</ShortDescription>
         <LongDescription>Converting floating numbers to integers in {1.class.givenClass}.{1.name}()</LongDescription>
@@ -192,6 +232,8 @@ higher as the significand of the floating value).</p>
 
     <BugCode abbrev="PRT">Debug output not in debug context</BugCode>
     <BugCode abbrev="ASR">Using &quot;assert&quot; keyword</BugCode>
+    <BugCode abbrev="JU5">Using JUnit5 Test annotation</BugCode>
+    <BugCode abbrev="JU4">Using JUnit4 Test annotation</BugCode>
     <BugCode abbrev="RND">Converting floating numbers to integers</BugCode>
     <BugCode abbrev="I2F">Converting integer number to float</BugCode>
     <BugCode abbrev="L2D">Converting long number to double</BugCode>
