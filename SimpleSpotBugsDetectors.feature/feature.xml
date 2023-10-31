@@ -2,29 +2,26 @@
 <feature
       id="de.loskutov.fb.detectors.feature"
       label="Simple SpotBugs Detectors"
-      version="1.0.2.qualifier"
+      version="1.0.3.qualifier"
       provider-name="Andrey Loskutov">
 
    <copyright>
-      Copyright (c) 2018 by Andrey Loskutov &lt;Loskutov@gmx.de&gt;.
+      Copyright (c) 2023 by Andrey Loskutov &lt;Loskutov@gmx.de&gt;.
 All rights reserved.
    </copyright>
 
    <license url="http://www.eclipse.org/legal/epl-v10.html">
-      Copyright (c) 2018 Andrey Loskutov, licensed under the Eclipse Public License 1.0.
+      Copyright (c) 2023 Andrey Loskutov, licensed under the Eclipse Public License 1.0.
    </license>
 
    <url>
-      <update label="Andrey Loskutov plugins site" url="http://andrei.gmxhome.de/eclipse/"/>
-      <discovery label="Zip Editor" url="http://zipeditor.sourceforge.net/update/"/>
+      <update label="Andrey Loskutov plugins site" url="https://raw.githubusercontent.com/iloveeclipse/plugins/latest/"/>
       <discovery label="SpotBugs" url="https://spotbugs.github.io/eclipse/"/>
-      <discovery label="Eclemma Java Code Coverage" url="http://update.eclemma.org/"/>
-      <discovery label="EGit" url="http://download.eclipse.org/egit/updates/"/>
       <discovery label="Plugin Dependencies" url="https://raw.githubusercontent.com/iloveeclipse/plugindependencies/master/update_site/"/>
    </url>
 
    <requires>
-      <import plugin="com.github.spotbugs.plugin.eclipse" version="3.1.2" match="greaterOrEqual"/>
+      <import plugin="com.github.spotbugs.plugin.eclipse" version="4.7.3" match="greaterOrEqual"/>
    </requires>
 
    <plugin
