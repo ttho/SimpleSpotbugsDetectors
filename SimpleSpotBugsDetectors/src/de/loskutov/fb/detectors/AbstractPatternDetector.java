@@ -16,6 +16,7 @@ import javax.annotation.Nonnull;
 
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
 import de.loskutov.fb.matcher.DefaultInstructionsIterator;
@@ -37,7 +38,7 @@ public abstract class AbstractPatternDetector extends ClassNodeDetector {
     abstract protected InsnPattern getPattern();
 
     @Nonnull
-    protected void checkAnnotations(MethodNode node, Consumer<BugInstance> reporter) {
+    protected void checkAnnotations(ClassNode clazzNode, MethodNode node, Consumer<BugInstance> reporter) {
         // no op by default
     }
 
@@ -68,7 +69,7 @@ public abstract class AbstractPatternDetector extends ClassNodeDetector {
                     }
                 }
             }
-            checkAnnotations(this, bug -> {
+            checkAnnotations(AbstractPatternDetector.this, this, bug -> {
                 bugReporter.reportBug(bug);
             });
         }
@@ -76,9 +77,19 @@ public abstract class AbstractPatternDetector extends ClassNodeDetector {
         boolean isStatic(){
             return (access & Opcodes.ACC_STATIC) != 0;
         }
+
+        @Override
+        public String toString() {
+            return "Method: " + this.name + this.desc;
+        }
     }
 
     public boolean checkClass() {
         return true;
+    }
+
+    @Override
+    public String toString() {
+        return "Class: " + this.name;
     }
 }

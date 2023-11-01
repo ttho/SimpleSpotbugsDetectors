@@ -19,6 +19,7 @@ import javax.annotation.Nonnull;
 import org.objectweb.asm.Opcodes;
 import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.AnnotationNode;
+import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.LineNumberNode;
 import org.objectweb.asm.tree.MethodNode;
 
@@ -45,7 +46,7 @@ public abstract class AbstractJunitAnnotationDetector extends AbstractPatternDet
     abstract String getBugType();
 
     @Override
-    protected void checkAnnotations(MethodNode node, Consumer<BugInstance> reporter) {
+    protected void checkAnnotations(ClassNode clazzNode, MethodNode node, Consumer<BugInstance> reporter) {
         List<AnnotationNode> annotations = node.visibleAnnotations;
         if(annotations == null) {
             return;
