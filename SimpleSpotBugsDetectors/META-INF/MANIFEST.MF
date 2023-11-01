@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: SimpleFindBugsDetectors
 Bundle-SymbolicName: de.loskutov.fb.detectors;singleton:=true
-Bundle-Version: 1.0.3.qualifier
+Bundle-Version: 1.0.4.qualifier
 Require-Bundle: spotbugs;resolution:=optional,
  com.github.spotbugs.plugin.eclipse;bundle-version="4.7.3",
  org.eclipse.core.runtime

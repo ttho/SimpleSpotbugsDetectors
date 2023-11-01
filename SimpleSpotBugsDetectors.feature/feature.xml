@@ -2,7 +2,7 @@
 <feature
       id="de.loskutov.fb.detectors.feature"
       label="Simple SpotBugs Detectors"
-      version="1.0.3.qualifier"
+      version="1.0.4.qualifier"
       provider-name="Andrey Loskutov">
 
    <copyright>
