@@ -46,8 +46,8 @@ public class DefaultInstructionsIterator {
                 i = skipToNext(i);
                 continue;
             }
-            // match! return instruction nr
-            return i > start? i : start + 1;
+            // match! return instruction nr + 1
+            return i+1;
         }
         return -1;
     }
